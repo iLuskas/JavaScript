@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang = "pt-br">
+<head>
+<meta charset = "utf-8"/>
+<title>Utilizando requestAnimationFrame</title>
+<style>
+#jogador{
+  width: 100px;
+  height: 100px;
+  border: solid 1px black;
+  background-color: #ff0;
+  top: 0px;
+  left: 0px;
+  position: absolute;
+
+}
+button.btn{
+margin-top: 100px;
+
+}
+</style>
+<script type = "text/javascript">
+var jog;
+var vel;
+var dx;
+var dy;
+var px;
+var py;
+var anima;
+var comeca;
+var pare;
+var estado;
+
+function moverpara(){
+if(estado){
+ estado = 0;
+ cancelAnimationFrame(anima);
+ }else{
+ estado = 1; 
+ anima = requestAnimationFrame(game);
+ }
+}
+function move(){
+if(!estado){
+ estado = 1;
+ anima = requestAnimationFrame(game);
+}
+}
+function para(){
+
+ estado = 0;
+ cancelAnimationFrame(anima);
+ 
+ }
+
+
+
+function inicia(){
+vel = 5;
+dx = 1;
+dy = 0;
+px = 0;
+py = 0;
+estado = 1;
+jog = document.getElementById("jogador");
+jog.addEventListener("click",moverpara);
+comeca = document.getElementById("btn1");
+comeca.addEventListener("click", move);
+pare = document.getElementById("btn2");
+pare.addEventListener("click", para);
+game();
+}
+
+function game(){
+px+=dx*vel;
+//py+=dy*vel;
+jog.style.left=px+"px";
+//jog.style.top=py+"px";
+if(px > 800){
+dx = -1;
+}
+if(px < 0){
+
+dx = 1;
+}
+anima = requestAnimationFrame(game);
+
+}
+
+window.addEventListener("load", inicia);
+
+</script>
+</head>
+<body>
+<div id = "jogador"></div>
+<button id = "btn1" class = "btn">Iniciar</button>
+<button id = "btn2" class = "btn">Parar</button>
+</body>
+</html>
